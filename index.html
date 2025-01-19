@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Puzzle Designer</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .puzzle-container {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .puzzle {
+      font-size: 18px;
+      color: #444;
+      margin-bottom: 20px;
+    }
+    .response-area {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    .answer-input {
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      margin-bottom: 10px;
+    }
+    .button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="puzzle-container">
+    <h1>AI Puzzle Designer</h1>
+    <div class="puzzle" id="puzzle">Welcome, puzzle solver! Ready for your first challenge?</div>
+    <input type="text" id="userAnswer" class="answer-input" placeholder="Type your answer here">
+    <button class="button" onclick="checkAnswer()">Submit Answer</button>
+    <div class="response-area" id="response"></div>
+    <button class="button" id="nextPuzzleBtn" onclick="nextPuzzle()" style="display:none;">Next Puzzle</button>
+    <div class="footer">Powered by AI Puzzle Generator</div>
+  </div>
+
+  <script>
+    const puzzles = [
+      {
+        puzzle: "What is 25 + 17?",
+        solution: "42"
+      },
+      {
+        puzzle: "I am an odd number. Take away one letter, and I become even. What number am I?",
+        solution: "Seven"
+      },
+      {
+        puzzle: "What word becomes shorter when you add two letters to it?",
+        solution: "Short"
+      },
+      {
+        puzzle: "How many months have 28 days?",
+        solution: "All of them"
+      },
+      {
+        puzzle: "What is the next number in the sequence: 2, 6, 12, 20, ?",
+        solution: "30"
+      }
+    ];
+
+    let currentPuzzleIndex = 0;
+
+    function nextPuzzle() {
+      const puzzleElement = document.getElementById('puzzle');
+      const responseElement = document.getElementById('response');
+      const userAnswerInput = document.getElementById('userAnswer');
+      const nextPuzzleButton = document.getElementById('nextPuzzleBtn');
+      
+      // Clear previous input and response
+      userAnswerInput.value = '';
+      responseElement.textContent = '';
+      nextPuzzleButton.style.display = 'none';
+      
+      // Get the current puzzle
+      const currentPuzzle = puzzles[currentPuzzleIndex];
+      
+      // Display the puzzle
+      puzzleElement.textContent = currentPuzzle.puzzle;
+      userAnswerInput.focus();
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.getElementById('userAnswer').value.trim();
+      const responseElement = document.getElementById('response');
+      const nextPuzzleButton = document.getElementById('nextPuzzleBtn');
+      const currentPuzzle = puzzles[currentPuzzleIndex];
+      
+      if (userAnswer.toLowerCase() === currentPuzzle.solution.toLowerCase()) {
+        responseElement.textContent = 'Correct! Well done!';
+        responseElement.style.color = 'green';
+      } else {
+        responseElement.textContent = `Oops! The correct answer was: ${currentPuzzle.solution}`;
+        responseElement.style.color = 'red';
+      }
+      
+      nextPuzzleButton.style.display = 'inline-block';  // Show the "Next Puzzle" button
+    }
+
+    // Initialize the first puzzle
+    nextPuzzle();
+  </script>
+
+</body>
+</html>
